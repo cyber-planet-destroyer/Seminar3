@@ -24,14 +24,17 @@ class Lod:
     def bran_se(self, uder):
         poskozeni = uder - (self._stit + self._kostka.hod())
         if poskozeni > 0:
-            zprava = f'{self._jmeno} utrpela zasah o sile {poskozeni} HP na trupu!'
+            zprava = f'{self._jmeno} utrpel(a) zasah o sile {poskozeni} HP na trupu!'
             self._trup -= poskozeni
         else:
-            zprava = f'{self._jmeno} odrazila utok stitem!'
+            zprava = f'{self._jmeno} odrazil(a) utok stitem!'
         self.nastav_zpravu(zprava)
 
+    def je_operacni(self):
+        return self._trup > 0 
+
     def nastav_zpravu(self, zprava):
-        self._zprava = zprava
+        self._zprava = zprava 
 
     def vypis_zpravu(self):
         return self._zprava
