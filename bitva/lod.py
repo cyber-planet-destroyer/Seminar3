@@ -7,6 +7,7 @@ class Lod:
     def __init__(self, jmeno, trup, utok, stit, kostka):
         self._jmeno = jmeno
         self._trup = trup
+        self._max_trup = trup
         self._utok = utok 
         self._stit = stit
         self._kostka = kostka
@@ -26,9 +27,21 @@ class Lod:
         if poskozeni > 0:
             zprava = f'{self._jmeno} utrpel(a) zasah o sile {poskozeni} HP na trupu!'
             self._trup -= poskozeni
+            if self._trup < 0:
+                self._trup = 0
+                zprava = f'{zprava[:-1]} a byl(a) znicen(a)!!!!'
         else:
             zprava = f'{self._jmeno} odrazil(a) utok stitem!'
         self.nastav_zpravu(zprava)
+
+    def graficky_trup(self, trup, max_trup):
+        celkem = 20
+        pocet = int(trup / max_trup * celkem)
+        if pocet == 0 and self.je_operacni():
+            pocet = 1
+        return f'[{"#"*pocet}{" "*(celkem - pocet)}]'
+
+
 
     def je_operacni(self):
         return self._trup > 0 

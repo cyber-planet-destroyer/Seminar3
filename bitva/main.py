@@ -8,7 +8,8 @@ class Sektor:
     Sprava souboje
     '''
 
-    def __init__(self, lod_1, lod_2, kostka):
+    def __init__(self, jmeno, lod_1, lod_2, kostka):
+        self._jmeno = jmeno
         self._lod_1 = lod_1
         self._lod_2 = lod_2
         self._kostka = kostka
@@ -16,16 +17,19 @@ class Sektor:
     def _vypis_lod(self, lod):
         print()
         print(f'{lod}')
-        print(f'{lod._trup} HP \n')
+        print(f'{lod.graficky_trup(lod._trup, lod._max_trup)} HP \n')
 
     def souboj(self):
         import random
         print()
-        print("Vitej v Narnii!")
-        print('================ \n')
+        print(f"Vitej v sektoru {self._jmeno}!")
+        print(f'================={len(self._jmeno)*"="} \n')
         print(f'Dnes se stretnou {self._lod_1} a {self._lod_2}. \n')
         print('Zahajit souboj... \n')
         input()
+
+        if random.randint(0, 1):
+            self._lod_1, self._lod_2 = self._lod_2, self._lod_1
 
         while self._lod_1.je_operacni() and self._lod_2.je_operacni():
             self._lod_1.utoc(self._lod_2)
@@ -59,16 +63,20 @@ class Sektor:
 
     def _vykreslit(self):
         self._vycisti()
-        print('================= Sektor Narnie =================== \n')
+        print(f'================= {self._jmeno} =================== \n')
         print('Lode: \n')
         self._vypis_lod(self._lod_1)
         self._vypis_lod(self._lod_2)
         print()
 
 if __name__ == '__main__':
-    k = Kostka(10)
-    lod1 = Lod('Mr. Cupcake', 100, 20, 18, k)
-    lod2 = Lod('Sand Man', 100, 15, 22, k)
+    k = Kostka(30)
+    l = Kostka(5)
 
-    narnie = Sektor(lod1, lod2, k)
-    narnie.souboj()
+    lod1 = Lod('Mr. Cupcake', 100, 20, 18, k)
+    lod2 = Lod('Sand Man', 100, 15, 22, l)
+    delta =  Sektor('Delta', lod1, lod2, k)
+    m = Sektor("Muchomurka", lod1, lod2, k)
+    delta.souboj()
+    m.souboj()
+    
