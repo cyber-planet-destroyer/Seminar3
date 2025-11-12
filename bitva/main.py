@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from kostka import Kostka
-from lod import Lod
+from lod import Lod, Stihac, Korveta
 
 class Sektor:
     '''
@@ -15,9 +15,11 @@ class Sektor:
         self._kostka = kostka
 
     def _vypis_lod(self, lod):
-        print()
-        print(f'{lod}')
-        print(f'{lod.graficky_trup(lod._trup, lod._max_trup)} HP \n')
+            print()
+            print(f'{lod}')
+            print(f'{lod.graficky_trup(lod._trup, lod._max_trup)} HP \n')
+            if isinstance(lod, Stihac):
+                print(f'Energie: {lod.graficka_energie()}')
 
     def souboj(self):
         import random
@@ -27,7 +29,7 @@ class Sektor:
         print(f'Dnes se stretnou {self._lod_1} a {self._lod_2}. \n')
         print('Zahajit souboj... \n')
         input()
-
+        
         if random.randint(0, 1):
             self._lod_1, self._lod_2 = self._lod_2, self._lod_1
 
@@ -73,10 +75,12 @@ if __name__ == '__main__':
     k = Kostka(30)
     l = Kostka(5)
 
-    lod1 = Lod('Mr. Cupcake', 100, 20, 18, k)
-    lod2 = Lod('Sand Man', 100, 15, 22, l)
+    lod1 = Korveta('Mr. Cupcake', 100, 20, 18, k)
+    lod2 = Stihac('Sand Man', 100, 15, 22, l, 60, 40)
+
     delta =  Sektor('Delta', lod1, lod2, k)
     m = Sektor("Muchomurka", lod1, lod2, k)
+
     delta.souboj()
-    m.souboj()
+    # m.souboj()
     
